@@ -1,0 +1,8 @@
+interface:
+  display_name: "HTML Tour Guide EN"
+  short_description: "Minimal offline HTML travel guide generator"
+  default_prompt: "Use $html-tourguide-en to turn this route into a minimal offline HTML travel guide."
+
+policy:
+  allow_implicit_invocation: true
+

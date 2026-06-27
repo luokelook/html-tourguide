@@ -1,0 +1,8 @@
+interface:
+  display_name: "HTML Tour Guide CN"
+  short_description: "极简离线 HTML 旅行导览生成器"
+  default_prompt: "Use $html-tourguide-cn to turn this route into a minimal offline HTML travel guide."
+
+policy:
+  allow_implicit_invocation: true
+
