@@ -32,6 +32,6 @@ HTML offers several advantages over PDF or Markdown:
 - Works offline after download
 
 ## What's in this repository
-skills/htmlguide/HTMLGUIDE-CN.md
-skills/htmlguide/HTMLGUIDE-EN.md
+skills/html-tourguide-en/skill.md
+skills/html-tourguide-cn/skill.md
 examples/
