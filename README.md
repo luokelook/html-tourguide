@@ -1,4 +1,4 @@
-# TOURGUIDE-WITH-HTML
+# html-tourguide
 Generateoffline HTML travel guides from any itinerary.
 
 This skill helps people who suffer from multi-app tour route plan,Instead of switching between notes, map apps, screenshots, and travel documents, this skill turns your travel plan into a mobile-friendly HTML guide that works as a lightweight travel companion.
@@ -30,3 +30,8 @@ HTML offers several advantages over PDF or Markdown:
 - Easy to share
 - No installation required
 - Works offline after download
+
+## What's in this repository
+skills/htmlguide/HTMLGUIDE-CN.md
+skills/htmlguide/HTMLGUIDE-EN.md
+examples/
