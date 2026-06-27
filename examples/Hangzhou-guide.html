@@ -1,1 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>杭州西湖一日游</title>
+<style>
+:root {
+ --bg: #f5f5f7;
+ --card: #ffffff;
+ --text: #1d1d1f;
+ --muted: #6e6e73;
+ --line: rgba(0, 0, 0, 0.08);
+ --accent: #007aff;
+ --radius: 22px;
+}
 
+@media (prefers-color-scheme: dark) {
+ :root {
+ --bg: #000000;
+ --card: #1c1c1e;
+ --text: #f5f5f7;
+ --muted: #a1a1a6;
+ --line: rgba(255, 255, 255, 0.12);
+ --accent: #0a84ff;
+ }
+}
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+}
+
+html {
+ -webkit-font-smoothing: antialiased;
+}
+
+body {
+ font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, "PingFang SC", "Noto Sans SC", sans-serif;
+ background: var(--bg);
+ color: var(--text);
+ line-height: 1.6;
+ padding: 0 18px 48px;
+ min-height: 100vh;
+}
+
+.container {
+ max-width: 760px;
+ margin: 0 auto;
+}
+
+/* ── Header / Overview ── */
+
+.overview {
+ padding: 48px 0 32px;
+}
+
+.overview-title {
+ font-size: 28px;
+ font-weight: 700;
+ letter-spacing: -0.3px;
+ margin-bottom: 10px;
+ color: var(--text);
+}
+
+.overview-theme {
+ font-size: 15px;
+ color: var(--muted);
+ margin-bottom: 24px;
+ line-height: 1.5;
+}
+
+.overview-meta {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 12px 24px;
+ margin-bottom: 20px;
+ font-size: 14px;
+ color: var(--muted);
+}
+
+.overview-meta span {
+ display: flex;
+ align-items: center;
+}
+
+.overview-meta .label {
+ font-weight: 500;
+ color: var(--text);
+ margin-right: 6px;
+}
+
+.overview-route {
+ background: var(--card);
+ border-radius: var(--radius);
+ padding: 18px 22px;
+ font-size: 14px;
+ border: 1px solid var(--line);
+}
+
+.overview-route .route-label {
+ font-weight: 600;
+ color: var(--text);
+ margin-bottom: 6px;
+ font-size: 13px;
+ letter-spacing: 0.3px;
+}
+
+.overview-route .route-stops {
+ color: var(--muted);
+ line-height: 1.7;
+}
+
+/* ── Stop Cards ── */
+
+.stops {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+.stop {
+ background: var(--card);
+ border-radius: var(--radius);
+ border: 1px solid var(--line);
+ overflow: hidden;
+}
+
+.stop-header {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 14px 20px;
+}
+
+.stop-toggle {
+ flex: 1;
+ background: none;
+ border: none;
+ padding: 0;
+ cursor: pointer;
+ text-align: left;
+ font-family: inherit;
+ font-size: 16px;
+ font-weight: 600;
+ color: var(--text);
+ -webkit-tap-highlight-color: transparent;
+ user-select: none;
+}
+
+.stop-toggle:active {
+ opacity: 0.6;
+}
+
+.nav-button {
+ flex-shrink: 0;
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 13px;
+ font-weight: 500;
+ text-decoration: none;
+ padding: 6px 16px;
+ border-radius: 999px;
+ background: var(--accent);
+ color: #fff;
+ transition: opacity 0.15s;
+ -webkit-tap-highlight-color: transparent;
+}
+
+.nav-button:active {
+ opacity: 0.7;
+}
+
+/* ── Detail (collapsible) ── */
+
+.stop-detail {
+ max-height: 0;
+ overflow: hidden;
+ transition: max-height 0.35s ease, padding 0.35s ease;
+ padding: 0 20px;
+}
+
+.stop.open .stop-detail {
+ max-height: 600px;
+ padding: 0 20px 18px;
+}
+
+.stop-detail .summary {
+ font-size: 15px;
+ font-weight: 500;
+ margin-bottom: 10px;
+ color: var(--text);
+}
+
+.stop-detail .context {
+ font-size: 14px;
+ color: var(--muted);
+ line-height: 1.7;
+ margin-bottom: 14px;
+}
+
+.stop-detail .keywords {
+ display: flex;
+ flex-wrap: wrap;
+ gap: 6px;
+}
+
+.stop-detail .keywords span {
+ display: inline-block;
+ font-size: 12px;
+ padding: 4px 12px;
+ border-radius: 999px;
+ background: var(--bg);
+ color: var(--muted);
+ border: 1px solid var(--line);
+}
+
+/* ── Footer ── */
+
+.footer {
+ margin-top: 32px;
+ text-align: center;
+ font-size: 12px;
+ color: var(--muted);
+ padding-bottom: 16px;
+}
+
+/* ── Tap area expansion for better UX ── */
+.stop-header {
+ min-height: 48px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+ <!-- ═══ Overview ═══ -->
+ <div class="overview">
+ <h1 class="overview-title">西湖一日游</h1>
+ <p class="overview-theme">一条围绕西湖的经典漫步路线，串联湖光山色与市井烟火。</p>
+
+ <div class="overview-meta">
+ <span><span class="label">城市</span>杭州</span>
+ <span><span class="label">时长</span>1 天</span>
+ <span><span class="label">交通</span>地铁 + 步行 + 共享单车</span>
+ </div>
+
+ <div class="overview-route">
+ <div class="route-label">路线</div>
+ <div class="route-stops">断桥 → 白堤 → 孤山 → 曲院风荷 → 苏堤 → 花港观鱼 → 雷峰塔 → 河坊街</div>
+ </div>
+ </div>
+
+ <!-- ═══ Stops ═══ -->
+ <div class="stops">
+
+ <!-- 1. 断桥残雪 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">断桥残雪</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20断桥残雪" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">西湖十景之一，也是环湖漫步的经典起点。</p>
+ <p class="context">断桥位于白堤东端，是西湖最著名的桥梁之一。民间传说《白蛇传》中许仙与白娘子在此相会，赋予了这座桥浪漫的色彩。桥畔远眺保俶塔与湖山相映，是感受西湖初印象的理想位置。</p>
+ <div class="keywords">
+ <span>桥与山湖构图</span>
+ <span>保俶塔远景</span>
+ <span>晨间湖面光影</span>
+ <span>游船与湖岸</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- 2. 白堤 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">白堤</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20白堤" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">连接断桥与孤山的湖堤，是西湖最经典的步行路段。</p>
+ <p class="context">白堤原名白沙堤，长约一公里。唐代诗人白居易任杭州刺史时曾留下"最爱湖东行不足，绿杨阴里白沙堤"的名句。堤上桃柳成行，两侧湖光山色各有不同，是西湖春色最佳观赏地之一。</p>
+ <div class="keywords">
+ <span>桃柳间隔种植</span>
+ <span>两侧湖面对比</span>
+ <span>远山城市轮廓</span>
+ <span>湖岸尺度感受</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- 3. 孤山 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">孤山</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20孤山" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">西湖中最大的湖岛，也是文化遗迹最为集中的区域。</p>
+ <p class="context">孤山是西湖文化景观的核心，平湖秋月为赏月胜地，西泠印社是中国金石篆刻研究的最高学府。山虽不高，但古迹密集——省博物馆、中山公园、放鹤亭等点缀其间，适合慢慢走、慢慢看。</p>
+ <div class="keywords">
+ <span>平湖秋月观景台</span>
+ <span>西泠印社园林石刻</span>
+ <span>省博物馆建筑</span>
+ <span>湖上山水层次</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- 4. 曲院风荷 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">曲院风荷</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20曲院风荷" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">以荷花为主题的西湖名园，夏日尤其宜人。</p>
+ <p class="context">曲院风荷为西湖十景之一，原是南宋宫廷酿酒作坊。园内大片荷塘，夏日荷叶连天、荷花飘香。九曲桥穿行荷塘之间，玉带晴虹桥横跨水面，是西湖最富诗意的园林空间之一。</p>
+ <div class="keywords">
+ <span>荷花品种与池面布局</span>
+ <span>九曲桥与亭台空间</span>
+ <span>水中倒影</span>
+ <span>玉带晴虹桥</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- 5. 苏堤 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">苏堤春晓</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20苏堤" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">苏东坡主持修筑的湖堤，纵贯西湖南北的景观轴线。</p>
+ <p class="context">苏堤全长近三公里，是北宋诗人苏东坡任杭州知州时疏浚西湖、利用淤泥筑成。堤上六桥起伏——映波、锁澜、望山、压堤、东浦、跨虹，桥桥不同。两侧湖光山色，是西湖最具代表性的步行体验。</p>
+ <div class="keywords">
+ <span>六桥形态变化</span>
+ <span>堤上植物与季节</span>
+ <span>北望孤山南望雷峰</span>
+ <span>南北两端湖景差异</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- 6. 花港观鱼 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">花港观鱼</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20花港观鱼" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">西湖边最精致的古典园林之一，以池鱼与花木闻名。</p>
+ <p class="context">花港观鱼位于苏堤南端，是西湖十景之一。园中红鱼池蓄养数千尾锦鲤，牡丹园花卉与太湖石相映成趣。江南园林的借景、对景手法在这里运用娴熟，小中见大，步移景异。</p>
+ <div class="keywords">
+ <span>红鱼池锦鲤倒影</span>
+ <span>借景——远山近水</span>
+ <span>牡丹园花卉与太湖石</span>
+ <span>松林湾光影</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- 7. 雷峰塔 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">雷峰塔</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20雷峰塔" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">西湖畔的标志性佛塔，也是俯瞰全景的最佳地点。</p>
+ <p class="context">雷峰塔初建于北宋，1924 年倒塌，2002 年在原址重建。因《白蛇传》传说而妇孺皆知。塔高 71 米，登塔可俯瞰西湖全景、城市天际线及远山。一层保留着古塔遗址，新旧对比令人深思。</p>
+ <div class="keywords">
+ <span>塔与湖城天际线</span>
+ <span>古塔遗址层</span>
+ <span>俯瞰苏堤与三潭印月</span>
+ <span>日落金色湖面</span>
+ </div>
+ </div>
+ </div>
+
+ <!-- 8. 河坊街 -->
+ <div class="stop" data-stop>
+ <div class="stop-header">
+ <button class="stop-toggle">河坊街</button>
+ <a class="nav-button" href="https://uri.amap.com/search?keyword=杭州%20河坊街" target="_blank" rel="noopener">导航</a>
+ </div>
+ <div class="stop-detail">
+ <p class="summary">杭州保存最完好的历史街区，适合作为一日游终点。</p>
+ <p class="context">河坊街位于吴山脚下，南宋时即为临安城核心商业区。至今保留清末民初建筑风貌，老字号林立，手工艺、小吃与文创共冶一炉。漫步其间，是体验杭州市井生活气息最直接的方式。</p>
+ <div class="keywords">
+ <span>民国建筑与老字号</span>
+ <span>街区尺度与人群动线</span>
+ <span>手工艺现场制作</span>
+ <span>本地小吃与游客消费</span>
+ </div>
+ </div>
+ </div>
+
+ </div>
+
+ <div class="footer">
+ 点击目的地名称展开详情 · 点击「导航」打开地图
+ </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+ document.querySelectorAll("[data-stop]").forEach(function(stop) {
+ var toggle = stop.querySelector(".stop-toggle");
+
+ toggle.addEventListener("click", function(e) {
+ e.stopPropagation();
+ document.querySelectorAll("[data-stop]").forEach(function(item) {
+ if (item !== stop) item.classList.remove("open");
+ });
+ stop.classList.toggle("open");
+ });
+ });
+});
+</script>
+</body>
+</html>
